@@ -6,7 +6,7 @@
   },
   "hostRequirements": { "cpus": 2 },
   "postCreateCommand": "pip install rdflib pyshacl owlready2 && mkdir -p ~/fuseki && (curl -fsSL https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-6.2.0.tar.gz || curl -fsSL https://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-6.2.0.tar.gz) | tar -xz -C ~/fuseki --strip-components=1 && grep -qxF '.fuseki-db/' .gitignore 2>/dev/null || echo '.fuseki-db/' >> .gitignore",
-  "postStartCommand": "mkdir -p ${containerWorkspaceFolder}/.fuseki-db && setsid nohup ~/fuseki/fuseki-server --loc=${containerWorkspaceFolder}/.fuseki-db --update /kg > /tmp/fuseki.log 2>&1 &",
+  "postStartCommand": "mkdir -p .fuseki-db && nohup bash -c '~/fuseki/fuseki-server --loc=.fuseki-db --update /kg' > /tmp/fuseki.log 2>&1 &",
   "forwardPorts": [3030],
   "portsAttributes": {
     "3030": { "label": "Fuseki (SPARQL server + UI)", "onAutoForward": "notify" }
